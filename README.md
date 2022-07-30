@@ -24,3 +24,16 @@ yarn create react-app app-name
 * */public/index.html*
 * */src/index.{css,js}* 
 * */src/app.{css,js}*
+
+# 라우팅을 위한 react-router-dom 설치
+
+```
+yarn add react-router-dom
+```
+
+## 앱에 필요한 URL들은?
+
+* /auth/login : 로그인
+* /auth/signup : 회원 가입
+* /todo : todo 리스트
+
