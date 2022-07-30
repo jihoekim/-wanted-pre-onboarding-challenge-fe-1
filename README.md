@@ -36,4 +36,3 @@ yarn add react-router-dom
 * /auth/login : 로그인
 * /auth/signup : 회원 가입
 * /todo : todo 리스트
-
