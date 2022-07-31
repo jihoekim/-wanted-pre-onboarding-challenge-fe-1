@@ -1,4 +1,4 @@
-const TodoList = () => {
+function TodoList(props) {
     return (
         "this is todo list page"
     );

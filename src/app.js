@@ -9,7 +9,7 @@ import {
 import "./app.css";
 import Login from "./auth/login";
 import Signup from "./auth/signup";
-import TodoList from "./todo/todolist";
+import Todo from "./todo/todo";
 
 function App() {
     return (
@@ -20,14 +20,16 @@ function App() {
             <div className="App-intro">
                 <Router>
                     <ul>
+                        <li><Link to="/">홈</Link></li>
                         <li><Link to="/auth/login">로그인</Link></li>
                         <li><Link to="/auth/signup">회원가입</Link></li>
                         <li><Link to="/todo">할일</Link></li>
                     </ul>
                     <Routes>
-                    <Route exact path='/auth/login' element={<Login />}></Route>
-                    <Route exact path='/auth/signup' element={<Signup />}></Route>
-                    <Route exact path='/todo' element={<TodoList />}></Route>
+                        <Route exact path='/' element={<Todo />}></Route>
+                        <Route exact path='/auth/login' element={<Login />}></Route>
+                        <Route exact path='/auth/signup' element={<Signup />}></Route>
+                        <Route exact path='/todo' element={<Todo />}></Route>
                     </Routes>
                 </Router>
             </div>
