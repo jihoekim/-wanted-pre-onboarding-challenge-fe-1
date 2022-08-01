@@ -1,5 +1,6 @@
     /**
      * @typedef {object} Todo
-     * @property {string|null} title
-     * @property {string|null} content
+     * @property {string=} title
+     * @property {string=} content
+     * @property {string=} id
      */

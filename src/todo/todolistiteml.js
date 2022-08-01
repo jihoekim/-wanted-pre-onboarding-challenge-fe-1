@@ -1,6 +1,21 @@
+// @ts-check
+
+import React from "react";
+
+/** 
+ * @typedef {object} Props
+ * @prop {string} value
+ * @prop {function|null} [onClick] callback for click
+ * 
+ * @param {Props} props
+ */
 function TodoListItem(props) {
 
-    return <li>{props.value}</li>;
+    function handleClick() {
+        if (props.onClick) props.onClick();
+    }
+
+    return <li onClick={handleClick}>{props.value}</li>;
 
 };
 

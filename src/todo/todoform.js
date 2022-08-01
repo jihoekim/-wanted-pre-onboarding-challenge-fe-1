@@ -1,46 +1,62 @@
 // @ts-check
 /// <reference path="../typedefs.js" />
 
-import React from "react";
-/**
- * 새로운 TODO를 작성하기 위한 입력 컴포넌트
+import React, { useEffect, useState } from "react";
+
+/** 
+ * TODO를 작성/수정하기 위한 입력 컴포넌트
+ * 
+ * @typedef {object} Props
+ * @prop {(todo:Todo|null)=>any} onComplete
+ * @prop {Todo=} todo
+ * 
+ * @param {Props} props
  */
 export default function TodoForm(props) {
 
+    const [todo, setTodo] = useState(props.todo||
+        {
+            title:'',
+            content:'',
+            id:undefined
+        });
+
 
     /**
-     * @type Todo
-     */
-    let todo = {
-        title:null,
-        content:null
-    }
-
-    /**
-     *  @typedef {object} MouseEvent
+     *  @typedef {object} Event
      */
 
     /**
      * handle todo title change
      * 
-     * @param {MouseEvent} e 
+     * @param {Event} e 
      */
     function handleTitleChange(e) {
-        todo.title = e.target.value;
+        let t_todo = {
+            title: e.target.value,
+            content: todo?.content,
+            id:todo?.id
+        }
+        setTodo(t_todo);
     }
     /**
      * handle todo content change
      * 
-     * @param {MouseEvent} e 
+     * @param {Event} e 
      */
     function handleContentChange(e) {
-        todo.content = e.target.value;
+        let t_todo = {
+            title: todo?.title,
+            content: e.target.value,
+            id:todo?.id
+        }
+        setTodo(t_todo);
     }
 
     return (
         <div>
-            <label>제목</label><input type="text" onChange={handleTitleChange}/>
-            <label>내용</label><input type="textarea" onChange={handleContentChange} />
+            <label>제목</label><input type="text" onChange={handleTitleChange} value={todo.title}/>
+            <label>내용</label><textarea onChange={handleContentChange} value={todo.content}/>
             <button onClick={()=>props.onComplete(todo)}>저장</button>
             <button onClick={()=>props.onComplete(null)}>취소</button>
         </div>
