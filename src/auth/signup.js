@@ -18,7 +18,7 @@ function Signup(props) {
         setMessage('');
     }, [email, password])
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     async function createUser() {
         
         try {

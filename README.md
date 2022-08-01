@@ -51,7 +51,7 @@ yarn add axios
 
 브라우저가 기본으로 제공하고 있는 xmlhttprequest 나 Fetch를 사용할 수도 있겠으나, 사용상의 편의 및 브라우저 호환성을 고려한 선택이다.
 
-# AUTH
+# AUTH [v0.0.3](https://github.com/jihoekim/wanted-pre-onboarding-challenge-fe-1/releases/tag/v0.0.3)
 
 ## Singup
 
@@ -84,3 +84,11 @@ yarn add axios
 * /src/auth/login.js
   * 이미 로그인 되어있는 경우 (로컬 스토리지에 토큰이 있는 경우) 홈으로.
   * 로그인 요청 성공시 홈으로.
+
+# Todo
+
+## New Todo
+
+## Components
+* /src/todo.js
+* /src/todoform.js
