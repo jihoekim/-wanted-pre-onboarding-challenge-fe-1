@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import  { useNavigate, Navigate } from 'react-router-dom'
 
-import * as loginService from "../api_service/login.service"
+import * as authService from "../api_service/auth.service"
 import EmailInput from "./email_input";
 import PasswordInput from "./password_input";
 
@@ -26,7 +26,7 @@ function Login(props) {
 
     async function login() {
         try {
-            await loginService.default(email, password);
+            await authService.default(email, password);
             navigate("/");
         } catch (error) {
             if (error.response?.data?.details) {
