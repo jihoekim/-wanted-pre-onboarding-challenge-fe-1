@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import  { useNavigate, Navigate } from 'react-router-dom'
 
-import axios from 'axios';
-
+import * as loginService from "../api_service/login.service"
 import EmailInput from "./email_input";
 import PasswordInput from "./password_input";
 
@@ -25,17 +24,9 @@ function Login(props) {
         setMessage('');
     }, [email, password])
 
-    // 서버로 로그인 요청
     async function login() {
-        
         try {
-            const response = await axios.post(
-                "http://localhost:8080/users/login", 
-                {email:email, password:password}
-            );
-            if (response.data?.token) {
-                localStorage.setItem("token", response.data.token);
-            }
+            await loginService.default(email, password);
             navigate("/");
         } catch (error) {
             if (error.response?.data?.details) {

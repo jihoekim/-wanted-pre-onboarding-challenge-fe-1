@@ -85,7 +85,7 @@ yarn add axios
   * 이미 로그인 되어있는 경우 (로컬 스토리지에 토큰이 있는 경우) 홈으로.
   * 로그인 요청 성공시 홈으로.
 
-# Todo
+# Todo [v0.0.5](https://github.com/jihoekim/wanted-pre-onboarding-challenge-fe-1/releases/tag/v0.0.5)
 
 
 
