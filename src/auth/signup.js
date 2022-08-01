@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import  { useNavigate } from 'react-router-dom'
 
-import axios from 'axios';
+import * as authService from "../api_service/auth.service"
 
 import EmailInput from "./email_input";
 import PasswordInput from "./password_input";
@@ -19,13 +19,10 @@ function Signup(props) {
     }, [email, password])
 
     const navigate = useNavigate();
+    
     async function createUser() {
-        
         try {
-            const response = await axios.post(
-                "http://localhost:8080/users/create", 
-                {email:email, password:password}
-            );
+            const response = await authService.createUser(email, password);
             navigate("/auth/login");
         } catch (error) {
             if (error.response?.data?.details) {
