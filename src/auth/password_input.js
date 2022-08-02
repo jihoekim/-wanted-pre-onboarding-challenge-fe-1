@@ -1,5 +1,6 @@
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 function PasswordInput(props) {
 
     const [pass, setPassword] = useState('');
@@ -18,10 +19,16 @@ function PasswordInput(props) {
     }
 
     return (
-        <span>
-            <label>패스워드</label>
-            <input type="password" value={pass} onChange={handleChange} placeholder="8자 이상의 패스워드를 입력하세요."/>
-        </span>
+        <TextField
+            required
+            fullWidth
+            margin="normal"
+            autoComplete="current-password"
+            label="패스워드"
+            placeholder="패스워드를 입력하세요."
+            value={pass}
+            onChange={handleChange}
+        />
     );
 };
 

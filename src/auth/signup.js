@@ -1,10 +1,26 @@
 import { useEffect, useState } from 'react';
 import  { useNavigate } from 'react-router-dom'
 
-import * as authService from "../api_service/auth.service"
+import {
+    Avatar,
+    Button,
+    CssBaseline,
+    Box,
+    Typography,
+    Container,
+    createTheme,
+    ThemeProvider,
+    TextField
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
+
+import * as authService from "../service/auth.service"
+import { logOut } from "../auth/validate.login";
 import EmailInput from "./email_input";
 import PasswordInput from "./password_input";
+
+const theme = createTheme();
 
 function Signup(props) {
 
@@ -19,10 +35,11 @@ function Signup(props) {
     }, [email, password])
 
     const navigate = useNavigate();
-    
+
     async function createUser() {
         try {
             const response = await authService.createUser(email, password);
+            logOut();
             navigate("/auth/login");
         } catch (error) {
             if (error.response?.data?.details) {
@@ -34,12 +51,52 @@ function Signup(props) {
     }
 
     return (
-        <div>
-            <EmailInput value={setEmail}/>
-            <PasswordInput value={setPassword} />
-            <input type="button" disabled={!submitState} value="가입" onClick={createUser}/>
-            <div style={{color:"red"}}>{message}</div>
-        </div>
+        <ThemeProvider theme={theme}>
+            <Container maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    회원 가입
+                </Typography>
+                <Box sx={{ mt: 1 }}>
+                    <EmailInput value={setEmail}/>
+                    <PasswordInput value={setPassword} />
+                    {
+                        message ?  
+                        <TextField 
+                            fullWidth 
+                            value={message}
+                            variant="filled"
+                            disabled
+                            hiddenLabel
+                            size="small"
+                            error
+                            />
+                        :<span></span>
+                    }
+                    <Button
+                        disabled={!submitState} 
+                        fullWidth
+                        variant="contained"
+                        onClick={createUser}
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        회원 가입
+                    </Button>
+                </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
     );
 };
 

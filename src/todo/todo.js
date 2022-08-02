@@ -3,7 +3,13 @@
 
 import React from "react";
 import { useEffect, useState } from "react";
-import getTodos, * as todoService from "../api_service/todo.service";
+
+import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
+
+import { Box, Fab, Grid } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+
+import getTodos, * as todoService from "../service/todo.service";
 import TodoDetail from "./tododetail";
 import TodoList from "./todolist";
 import TodoForm from "./todoform";
@@ -18,6 +24,7 @@ function Todo(props) {
     const [todoformview, setTodoFormView] = useState(false);
     const [detailtodoview, setDetailTodoView] = useState(null);
     const [modifytodoview, setModifyTodoView] = useState(null);
+    const [selected, setSelected] = useState('');
 
     const DETAIL_VIEW_CONTENT = {
         DETAIL: "DETAIL",
@@ -25,22 +32,52 @@ function Todo(props) {
         MODIFY: "MODIFY"
     }
 
-    useEffect(() => {
-        async function initializeTodos() {
-            try {
-                const todos = await getTodos();
-                // @ts-ignore
-                setTodos(todos);
-            } catch (error) {
-                if (error.response?.data?.details) {
-                    console.log(error.response.data.details)
-                } else {
-                    console.error(error.response);
-                }
+    const params = useParams();
+    const history = useNavigate();
+    const location = useLocation();
+
+    async function initializeTodos() {
+        try {
+            const todos = await getTodos();
+            // @ts-ignore
+            setTodos(todos);
+        } catch (error) {
+            if (error.response?.data?.details) {
+                console.log(error.response.data.details)
+            } else {
+                console.error(error.response);
             }
-        };
+        }
+    };
+
+    async function getTodo(id) {
+        // runs on location, i.e. route, change
+        try {
+            const todo = await todoService.getTodo(id);
+            selectDetailViewContent(DETAIL_VIEW_CONTENT.DETAIL, todo);
+            setSelected(id);
+        } catch (error) {
+            if (error.response?.data?.details) {
+                console.log(error.response.data.details)
+            } else {
+                console.error(error.response);
+            }
+        }
+    };
+
+    async function locate() {
+        // runs on location, i.e. route, change
+        if (params?.id) await getTodo(params?.id);
+    };
+
+    useEffect(() => {
         initializeTodos();
-    },[]);
+        if (params?.id) getTodo(params.id);
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        locate();
+      }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
     
     /**
      * 상세보기 영역의 컴포넌트 선택
@@ -128,17 +165,7 @@ function Todo(props) {
      * @param {string} id 
      */
     async function handleSelected(id) {
-        try {
-            const todo = await todoService.getTodo(id);
-            // @ts-ignore
-            selectDetailViewContent(DETAIL_VIEW_CONTENT.DETAIL, todo);
-        } catch (error) {
-            if (error.response?.data?.details) {
-                console.log(error.response.data.details)
-            } else {
-                console.error(error.response);
-            }
-        }
+            history("/todo/"+id);
     }
 
     /**
@@ -160,13 +187,14 @@ function Todo(props) {
     async function handleDeleteClick(todo) {
         if (todo) {
             try {
-                const data = await todoService.deleteTodo(todo);
+                await todoService.deleteTodo(todo);
                 /**
                  * @type Array.<Todo>
                  */
                 const t_todos = [...todos];
                 // @ts-ignore
                 setTodos(t_todos.filter((t_todo)=> t_todo.id!==todo.id));
+                if (selected===todo.id) setSelected('');
                 selectDetailViewContent();
             } catch (error) {
                 if (error.response?.data?.details) {
@@ -179,26 +207,37 @@ function Todo(props) {
     }
 
     return (
-        <div>
-            <TodoList todos={todos} onSelect={handleSelected}/>
-            <button onClick={()=>{selectDetailViewContent(DETAIL_VIEW_CONTENT.NEW)}}>새 할일</button>
-            {
-                todoformview ? <TodoForm onComplete={newTodo} />:''
-            }
-            {
-                detailtodoview ? 
-                <TodoDetail 
-                    todo={detailtodoview} 
-                    onModifyClick={handleModifyClick}
-                    onDeleteClick={handleDeleteClick}
-                />
-                :''
-            }
-            {
-                modifytodoview ? <TodoForm onComplete={modifyTodo} todo={modifytodoview}/>:''
-            }
-            
-        </div>
+        props.loginState ?
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+                <Grid item xs={6} md={4}>
+                    <TodoList todos={todos} onSelect={handleSelected} selected={selected}/>
+                </Grid>
+                
+                <Grid item xs={6} md={8} mt={2}>
+                {
+                    todoformview ? <TodoForm onComplete={newTodo} />:''
+                }
+                {
+                    detailtodoview ? 
+                    <TodoDetail 
+                        todo={detailtodoview} 
+                        onModifyClick={handleModifyClick}
+                        onDeleteClick={handleDeleteClick}
+                    />
+                    :''
+                }
+                {
+                    modifytodoview ? <TodoForm onComplete={modifyTodo} todo={modifytodoview}/>:''
+                }
+                </Grid> 
+            </Grid>
+            <Fab variant="extended" color="primary" aria-label="add" onClick={()=>{selectDetailViewContent(DETAIL_VIEW_CONTENT.NEW)}}>
+                    <AddIcon sx={{ mr: 1 }} />
+                        할일 추가
+            </Fab>
+        </Box>
+        : <Navigate to='/auth/login'  /> 
     );
 };
 

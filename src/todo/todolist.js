@@ -1,6 +1,10 @@
 // @ts-check
 
-import React, { useState } from "react";
+import {
+    List 
+} from '@mui/material';
+
+import React from "react";
 import TodoListItem from "./todolistiteml.js";
 
 /** 
@@ -13,31 +17,27 @@ import TodoListItem from "./todolistiteml.js";
  */
 function TodoList(props) {
 
-    const [selected, setSelected] = useState(props.selected);
-
     /**
      * 
      * @param {string} id 
      */
     function handleSelected(id) {
-        setSelected(id);
         if (props.onSelect) props.onSelect(id);
     }
 
     return (
-        <div>
-            <ul>
+        <List>
             {
-                props.todos && props.todos.length > 0 ?
+                props.todos?.length > 0 ?
                 props.todos.map(
                     (todo) => <TodoListItem 
                                 key={todo.id} 
-                                value={todo.title} 
+                                value={todo.title}
+                                selected={todo.id=== props.selected}
                                 onClick={()=>handleSelected(todo.id)}/>) 
-                : <span>"no todos"</span>
+                : <span>no todos</span>
             }
-            </ul>
-        </div>
+        </List>
     );
 };
 

@@ -3,6 +3,13 @@
 
 import React from "react";
 
+import {
+    Card,
+    CardContent,
+    Typography,
+    Button,
+    CardActions
+} from "@mui/material";
 /** 
  * @typedef {object} Props
  * @prop {Todo|null=} todo
@@ -45,12 +52,23 @@ function TodoDetail(props) {
     }
 
     return (
-        <div>
-            <label>제목</label><div>{todo.title?.toString()}</div>
-            <label>내용</label><div>{todo.content?.toString()}</div>
-            <button onClick={()=>handleModifyClick(todo)}>수정</button>
-            <button onClick={()=>handleDeleteClick(todo)}>삭제</button>
-        </div>
+        <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+                <Typography variant="h5" component="div">
+                {todo.title?.toString()}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                {todo.content?.toString()}
+                </Typography>
+                <Typography variant="body2">
+
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" onClick={()=>handleModifyClick(todo)}>수정</Button>
+                <Button size="small" onClick={()=>handleDeleteClick(todo)}>삭제</Button>
+            </CardActions>
+        </Card>
     );
 };
 

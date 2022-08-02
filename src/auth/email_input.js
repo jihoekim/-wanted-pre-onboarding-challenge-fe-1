@@ -1,5 +1,6 @@
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 function EmailInput(props) {
 
     const [email, setEmail] = useState('');
@@ -18,10 +19,17 @@ function EmailInput(props) {
     }
 
     return (
-        <span>
-            <label>이메일</label>
-            <input type="text" placeholder="이메일을 입력하세요." value={email} onChange={handleChange}/>
-        </span>
+        <TextField
+            required
+            fullWidth
+            margin="normal"
+            autoComplete="email"
+            autoFocus
+            label="이메일"
+            placeholder="이메일을 입력하세요."
+            value={email}
+            onChange={handleChange}
+        />
     );
 };
 
