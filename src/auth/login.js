@@ -18,8 +18,8 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import * as authService from "../service/auth.service"
-import EmailInput from "./email_input";
-import PasswordInput from "./password_input";
+import EmailInput from "./email.input";
+import PasswordInput from "./password.input";
 import validateLogin from './validate.login';
 
     const theme = createTheme();

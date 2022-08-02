@@ -17,8 +17,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import * as authService from "../service/auth.service"
 import { logOut } from "../auth/validate.login";
-import EmailInput from "./email_input";
-import PasswordInput from "./password_input";
+import EmailInput from "./email.input";
+import PasswordInput from "./password.input";
 
 const theme = createTheme();
 

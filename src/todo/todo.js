@@ -10,9 +10,9 @@ import { Box, Fab, Grid } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 import getTodos, * as todoService from "../service/todo.service";
-import TodoDetail from "./tododetail";
-import TodoList from "./todolist";
-import TodoForm from "./todoform";
+import TodoDetail from "./todo.detail";
+import TodoList from "./todo.list";
+import TodoForm from "./todo.form";
 
 /** 
  * 
@@ -66,7 +66,6 @@ function Todo(props) {
     };
 
     async function locate() {
-        // runs on location, i.e. route, change
         if (params?.id) await getTodo(params?.id);
     };
 
@@ -232,7 +231,11 @@ function Todo(props) {
                 }
                 </Grid> 
             </Grid>
-            <Fab variant="extended" color="primary" aria-label="add" onClick={()=>{selectDetailViewContent(DETAIL_VIEW_CONTENT.NEW)}}>
+            <Fab 
+                variant="extended" 
+                color="primary" 
+                aria-label="add" 
+                onClick={()=>{selectDetailViewContent(DETAIL_VIEW_CONTENT.NEW)}}>
                     <AddIcon sx={{ mr: 1 }} />
                         할일 추가
             </Fab>
