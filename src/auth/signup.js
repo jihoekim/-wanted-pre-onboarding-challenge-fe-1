@@ -38,7 +38,7 @@ function Signup(props) {
 
     async function createUser() {
         try {
-            const response = await authService.createUser(email, password);
+            await authService.createUser(email, password);
             logOut();
             navigate("/auth/login");
         } catch (error) {

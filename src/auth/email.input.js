@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
+
 function EmailInput(props) {
 
     const [email, setEmail] = useState('');

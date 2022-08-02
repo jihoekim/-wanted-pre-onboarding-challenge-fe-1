@@ -42,9 +42,15 @@ function Todo(props) {
             // @ts-ignore
             setTodos(todos);
         } catch (error) {
-            if (error.response?.data?.details) {
+            if (error.message==="no token") {
+                // set app login state to false
+                props.onLogout(false);
+                history("/auth/login");
+            }
+            else if (error.response?.data?.details) {
                 console.log(error.response.data.details)
-            } else {
+            } 
+            else {
                 console.error(error.response);
             }
         }
@@ -57,9 +63,15 @@ function Todo(props) {
             selectDetailViewContent(DETAIL_VIEW_CONTENT.DETAIL, todo);
             setSelected(id);
         } catch (error) {
-            if (error.response?.data?.details) {
+            if (error.message==="no token") {
+                // set app login state to false
+                props.onLogout(false);
+                history("/auth/login");
+            } 
+            else if (error.response?.data?.details) {
                 console.log(error.response.data.details)
-            } else {
+            } 
+            else {
                 console.error(error.response);
             }
         }
@@ -68,6 +80,12 @@ function Todo(props) {
     async function locate() {
         if (params?.id) await getTodo(params?.id);
     };
+
+    function gotoLogin() {
+        // set app login state to false
+        props.onLogout(false);
+        history("/auth/login");
+    }
 
     useEffect(() => {
         initializeTodos();
@@ -123,9 +141,13 @@ function Todo(props) {
                 setTodos(todos.concat([data]));
                 selectDetailViewContent(DETAIL_VIEW_CONTENT.DETAIL, data);
             } catch (error) {
-                if (error.response?.data?.details) {
+                if (error.message==="no token") {
+                    gotoLogin();
+                } 
+                else if (error.response?.data?.details) {
                     console.log(error.response.data.details)
-                } else {
+                } 
+                else {
                     console.error(error.response);
                 }
             }            
@@ -149,9 +171,13 @@ function Todo(props) {
                 setTodos(t_todos.map((t_todo)=>t_todo.id===todo.id?todo:t_todo));
                 selectDetailViewContent(DETAIL_VIEW_CONTENT.DETAIL, data);
             } catch (error) {
-                if (error.response?.data?.details) {
+                if (error.message==="no token") {
+                    gotoLogin()
+                } 
+                else if (error.response?.data?.details) {
                     console.log(error.response.data.details)
-                } else {
+                } 
+                else {
                     console.error(error.response);
                 }
             }            
@@ -196,9 +222,13 @@ function Todo(props) {
                 if (selected===todo.id) setSelected('');
                 selectDetailViewContent();
             } catch (error) {
-                if (error.response?.data?.details) {
+                if (error.message==="no token") {
+                    gotoLogin();
+                } 
+                else if (error.response?.data?.details) {
                     console.log(error.response.data.details)
-                } else {
+                } 
+                else {
                     console.error(error.response);
                 }
             }   

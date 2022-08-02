@@ -3,15 +3,21 @@
 
 import axios from "axios";
 
+import { getToken } from "../auth/validate.login";
+
 /**
  * Todo 리스트 요청
  * 
  * @returns {Promise<Todo>}
  */
 export default async function getTodos() {
+
+    const token = getToken();
+    if (!token) throw(Error("no token"));
+
     const response = await axios.get(
         "http://localhost:8080/todos", 
-        {headers:{Authorization:"a"}}
+        {headers:{Authorization:token}}
     );
     return(response.data.data);
 }
@@ -23,10 +29,13 @@ export default async function getTodos() {
  * @returns {Promise<Todo>}
  */
 export async function createTodo(todo) {
+    const token = getToken();
+    if (!token) throw(Error("no token"));
+
     const response = await axios.post(
         "http://localhost:8080/todos",
         {...todo},
-        {headers:{Authorization:"a"}}
+        {headers:{Authorization:token}}
     );
     return(response.data.data);
 }
@@ -38,10 +47,13 @@ export async function createTodo(todo) {
  * @returns {Promise<Todo>}
  */
  export async function updateTodo(todo) {
+    const token = getToken();
+    if (!token) throw(Error("no token"));
+
     const response = await axios.put(
         "http://localhost:8080/todos/"+todo.id,
         {...todo},
-        {headers:{Authorization:"a"}}
+        {headers:{Authorization:token}}
     );
     return(response.data.data);
 }
@@ -52,9 +64,12 @@ export async function createTodo(todo) {
  * @returns {Promise<Todo>}
  */
  export async function deleteTodo(todo) {
+    const token = getToken();
+    if (!token) throw(Error("no token"));
+
     const response = await axios.delete(
         "http://localhost:8080/todos/"+todo.id,
-        {headers:{Authorization:"a"}}
+        {headers:{Authorization:token}}
     );
     return(response.data.data);
 }
@@ -66,9 +81,12 @@ export async function createTodo(todo) {
  * @returns {Promise<Todo>}
  */
  export async function getTodo(id) {
+    const token = getToken();
+    if (!token) throw(Error("no token"));
+
     const response = await axios.get(
         "http://localhost:8080/todos/"+id,
-        {headers:{Authorization:"a"}}
+        {headers:{Authorization:token}}
     );
     return(response.data.data);
 }

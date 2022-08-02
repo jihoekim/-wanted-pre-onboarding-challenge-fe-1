@@ -4,6 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 import  { useNavigate, Navigate } from 'react-router-dom'
+
 import {
     Avatar,
     Button,
@@ -22,7 +23,7 @@ import EmailInput from "./email.input";
 import PasswordInput from "./password.input";
 import validateLogin from './validate.login';
 
-    const theme = createTheme();
+const theme = createTheme();
 
 function Login(props) {
     const [email, setEmail] = useState(null);

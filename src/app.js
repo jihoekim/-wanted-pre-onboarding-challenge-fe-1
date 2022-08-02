@@ -45,6 +45,8 @@ function App() {
         setLoginState(true);
     }
 
+    
+
     return (
     <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
@@ -78,11 +80,11 @@ function App() {
                 </AppBar>
                 <Container maxWidth="xl">
                     <Routes>
-                        <Route path='/' element={<Todo loginState={loginState} />}></Route>
-                        <Route path='/auth/login' element={<Login  onSuccess={handleLogin} />}></Route>
+                        <Route path='/' element={<Todo loginState={loginState} onLogout={setLoginState}/>}></Route>
+                        <Route path='/auth/login' element={<Login onSuccess={handleLogin}/>}></Route>
                         <Route path='/auth/signup' element={<Signup />}></Route>
                         <Route path='/todo' element={<Todo loginState={loginState} />}></Route>
-                        <Route path='/todo/:id' element={<Todo loginState={loginState} />}></Route>
+                        <Route path='/todo/:id' element={<Todo loginState={loginState} onLogout={setLoginState}/>}></Route>
                     </Routes>
                 </Container>
             </Router>

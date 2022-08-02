@@ -16,3 +16,12 @@
 export function logOut() {
     localStorage.removeItem("token");
 }
+
+/**
+ * 로그인 토큰 가져오기
+ * 
+ * @returns {string|null} token
+ */
+export function getToken() {
+    return localStorage.getItem("token");
+}
