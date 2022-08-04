@@ -77,8 +77,8 @@ function Todo(props) {
         }
     };
 
-    async function locate() {
-        if (params?.id) await getTodo(params?.id);
+    function locate() {
+        if (params?.id) getTodo(params?.id);
     };
 
     function gotoLogin() {
@@ -89,7 +89,7 @@ function Todo(props) {
 
     useEffect(() => {
         initializeTodos();
-        if (params?.id) getTodo(params.id);
+        locate();
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
